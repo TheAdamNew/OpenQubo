@@ -2,6 +2,8 @@
 
 A Minecraft server scanner that scans IP ranges to find online Minecraft servers. Originally distributed as `qubo.jar`, now open-sourced as a buildable Gradle project.
 
+> **Note:** This build has the automatic version checker removed. The original `qubo.jar` would contact GitHub on startup to check for updates and prompt to download new versions. That functionality has been stripped out.
+
 ## Features
 
 - **IP Range Scanning** - Scan entire IP ranges for Minecraft servers
