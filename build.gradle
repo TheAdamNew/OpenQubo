@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'me.replydev'
+version = '0.3.7'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_15
+    targetCompatibility = JavaVersion.VERSION_15
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'commons-cli:commons-cli:1.4'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.13'
+    implementation 'commons-logging:commons-logging:1.2'
+    implementation 'commons-codec:commons-codec:1.11'
+    implementation 'com.formdev:flatlaf:1.6.4'
+    implementation 'net.java.dev.jna:jna:5.13.0'
+    implementation 'net.java.dev.jna:jna-platform:5.13.0'
+    implementation 'com.github.seancfoley:ipaddress:5.3.4'
+    implementation 'com.intellij:forms_rt:7.0.3'
+}
+
+application {
+    mainClass = 'me.replydev.qubo.Main'
+}
+
+tasks.register('fatJar', Jar) {
+    archiveClassifier = 'all'
+    manifest {
+        attributes 'Main-Class': 'me.replydev.qubo.Main'
+    }
+    from sourceSets.main.output
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'me.replydev.qubo.Main'
+        )
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
